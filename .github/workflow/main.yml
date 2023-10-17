@@ -1,0 +1,27 @@
+name: deploy to ec2
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+    build:
+      runs-on: ubuntu-latest
+      steps:
+      - name: checkout repo
+        uses: actions/checkout@v2
+
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PASSWORD }}
+          port: 22
+          script: |
+            cd chat/backend
+            git fetch --all
+            git reset --hard origin/master
+            git pull origin origin/master
+            sudo docker compose up --build -d
+            

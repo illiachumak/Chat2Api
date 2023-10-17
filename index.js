@@ -16,7 +16,7 @@ app.use("/api/users", userRoute)
 app.use("/api/chat", chatRoute)
 app.use("/api/messages", messageRoute)
 
-const port = process.env.PORT || 3001;
+const port = 5000;
 
 const server = http.createServer(app);
 const io = require("socket.io")(server, {
