@@ -9,14 +9,19 @@ const userModel = require("./Models/userModel");
 
 const app = express();
 require("dotenv").config()
-
+const corsOptions = {
+    origin: ["http://localhost:3000", "http://localhost:5173"],
+    methods: ["GET", "POST"],
+    credentials: true
+};
+app.use(cors(corsOptions));
 app.use(express.json());
-app.use(cors());
+
 app.use("/api/users", userRoute)
 app.use("/api/chat", chatRoute)
 app.use("/api/messages", messageRoute)
 
-const port = process.env.PORT || 3001;
+const port = 5000;
 
 const server = http.createServer(app);
 const io = require("socket.io")(server, {
